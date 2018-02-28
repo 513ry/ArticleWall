@@ -1,0 +1,50 @@
+alert(<?php echo $artcles_amount ?>);
+
+	function link(l) {
+	    window.location.replace(l);
+	}
+
+	function generateArticles() {
+	    let n = 1;
+
+	    if (n > 0) {
+		for (let i = 0; i < n; i++) {
+		    // create dom-module "box"
+		    let b = document.createElement('div'),
+			t = document.createElement('header'),
+			c = document.createElement('article'),
+			h = document.createElement('h1');
+
+		    c.innerHTML = ("<?php echo $post->content ?>");
+		    c.className = ('content');
+		    
+		    h.innerHTML = ("<?php echo $post->title ?>");
+		    t.appendChild(h);
+		    t.className = ('title');
+
+		    b.appendChild(t);
+		    b.appendChild(c);
+		    b.className = ('box');
+
+		    let parent = document.getElementById('articles-feed');
+
+		    // append html element
+		    parent.insertBefore(b, parent.firstChild);
+		}
+	    } else {
+		let parent = document.getElementById('articles-feed');
+		let t = document.createTextNode('Oops.. articles feed is empty!');
+
+		parent.appendChild(t);
+	    }
+	}
+    
+	function toggleNavPanel() {
+	    let e = document.getElementById("toggle-nav-wrapper");
+
+	    if (e.style.display === "none") {
+		e.style.display = "block";
+	    } else {
+		e.style.display = "none";
+	    }
+	}

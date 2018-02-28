@@ -1,0 +1,117 @@
+body {
+    background-color: rgb(235, 235, 235);
+    background-image: url("../data/subtel-bg.png");
+    color: rgb(10, 10, 10);
+    font: 14px Helvetica;
+    
+    margin: 0 !important;
+}
+
+* {
+    box-sizing: border-box;
+
+    padding: 0;
+    margin: 0;
+}
+
+main {
+    width: 100%;
+}
+
+.top-bar {
+    text-align: center;
+    
+    width: 100%;
+    padding: 33px;
+}
+
+.main-nav-wrapper {
+    text-align: left;
+    margin: auto;
+    
+    width: 1060px;
+}
+
+.logo-wrapper {
+    float: left;
+    cursor:pointer;
+
+    min-width: 250px;
+}
+
+.logo {
+    padding: 20px;
+    
+    background-image: url("../data/UI/84-logo.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    width: 100%;
+}
+
+.body-wrapper {
+    background-color: rgb(255, 255, 255);
+
+    display: block;
+    
+    padding: 10px;
+    margin: auto;
+    width: 1060px;
+}
+
+.box {
+    padding: 5px;
+    padding-bottom: 23px;
+}
+
+.box + .box {
+    border-top: solid rgb(203,203, 203) 2px;
+}
+
+.title {
+    
+}
+
+
+footer {
+    margin-top: 82px;
+    color: rgb(70, 70, 70);
+    text-align: center !important;
+}
+
+.claer { clear: both; }
+
+h1, h2, h3, h4 {  }
+
+.code {
+    font-family: MonoSpace;
+
+    background-color: rgb(230, 230, 230);
+}
+
+.block {}
+
+/* Here goes direct tags for syntax highlighting for various of languages */
+.c {
+    color: #1C1C1C;
+}
+
+.c-var {
+    color: #32679A;
+}
+
+.c-fun {
+    color: #1C1C1C;
+}
+
+.c-num {
+    color: #9A325C;
+}
+
+c-prepro {
+    color: #C14B1C;
+}
+
+c-str {
+    color: #7d2727;
+}
