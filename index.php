@@ -6,13 +6,18 @@ require_once("../secure/blog_connect.php");
 // create the querys
 $post_query = $dbc->query ("SELECT * FROM post");
 $post;
+$post_2;
 $cnt_query = $dbc->query ('SELECT COUNT(*) count FROM post');
 $articles_amount;
 
 if ($post_query && $cnt_query->num_rows) {
-    $post = $post_query->fetch_object();
-
-    print_r($post);
+    // execute the query and put data into an array holding
+    // array with fetched row
+    $i = 0;
+    while ($post = mysqli_fetch_array($post_query)) {
+        $post_2[$i] = $post;
+        $i ++;
+    }
 
     $tmp = $cnt_query->fetch_object();
     $articles_amount = $tmp->count;
@@ -82,54 +87,55 @@ else
 
     <!-- JAVASCRIPT -->
     <script type="text/javascript">
-	function link(l) {
-	    window.location.replace(l);
-	}
+      function link(l) {
+	  window.location.replace(l);
+      }
 
-	function generateArticles() {
-	    let n = <?php echo $articles_amount ?>;
-
-	    if (n > 0) {
-		for (let i = 0; i < n; i++) {		    
-		    // create dom-module "box"
-		    let b = document.createElement('div'),
-			t = document.createElement('header'),
-			c = document.createElement('article'),
-			h = document.createElement('h1');
-
-		    c.innerHTML = ("<?php echo addslashes($post->content); ?>");
-		    c.className = ('content');
-		    
-		    h.innerHTML = ("<?php echo $post->title; ?>");
-		    t.appendChild(h);
-		    t.className = ('title');
-		    
-		    b.appendChild(t);
-		    b.appendChild(c);
-		    b.className = ('box');
-
-		    let parent = document.getElementById('articles-feed');
-
-		    // append html element
-		    parent.insertBefore(b, parent.firstChild);
-		}
-	    } else {
-		let parent = document.getElementById('articles-feed');
-		let t = document.createTextNode('Oops.. articles feed is empty!');
-
-		parent.appendChild(t);
-	    }
-	}
-    
-	function toggleNavPanel() {
-	    let e = document.getElementById("toggle-nav-wrapper");
-
-	    if (e.style.display === "none") {
-		e.style.display = "block";
-	    } else {
-		e.style.display = "none";
-	    }
-	}
+      function generateArticles() {
+	  <?php
+      if ($articles_amount > 0) {
+          echo "let n = $articles_amount;";
+          for ($i = 0; $i < $articles_amount; $i++) {
+              echo "
+              let b$i = document.createElement(\"div\"),
+		      t$i = document.createElement(\"header\"),
+              c$i = document.createElement(\"article\"),
+              h$i = document.createElement(\"h1\");
+            
+              c$i.innerHTML = ( \"" . addslashes($post_2[$i][1]) . "\" );
+              c$i.className = (\"content\");
+      
+              h$i.innerHTML = ( \"" . addslashes($post_2[$i][0]) . "\" );
+              t$i.appendChild(h$i);
+              t$i.className = (\"title\");
+      
+              b$i.appendChild(t$i);
+              b$i.appendChild(c$i);
+              b$i.className = (\"box\");
+      
+              let parent$i = document.getElementById(\"articles-feed\");
+      
+              // append html element
+              parent$i.insertBefore(b$i, parent$i.firstChild);
+      ";
+          }
+      } else {
+	  echo "console.log('no articles to be loadet')";
+      }
+            
+      ?>
+	  
+      }
+      
+      function toggleNavPanel() {
+	  let e = document.getElementById("toggle-nav-wrapper");
+	  
+	  if (e.style.display === "none") {
+	      e.style.display = "block";
+	  } else {
+	      e.style.display = "none";
+	  }
+      }
 
     </script>
 
