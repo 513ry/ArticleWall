@@ -1,4 +1,4 @@
-# articleswall
+# articlewall
 
 Simple script generating dom objects, focused on blog articles, with no third part librarys besides mysqli.
 
