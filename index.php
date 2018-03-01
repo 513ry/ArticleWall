@@ -57,7 +57,7 @@ else
     
   </head>
   
-  <body>
+  <body onload="generateArticles()">
     <main>
       <!-- MAIN HEADER -->
       <header class="top-bar">
@@ -65,8 +65,6 @@ else
 	  <div class="logo-wrapper">
 	    <div onclick='link("index.php");' class="logo"></div>
 	  </div>
-
-	  <button onclick="generateArticles();"> Load Article Feed </button>
 	  
 	  <div class="claer"></div>
 	</nav>
