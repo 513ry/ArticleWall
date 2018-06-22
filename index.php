@@ -3,6 +3,8 @@ error_reporting(E_ALL);
 
 require_once("../secure/blog_connect.php");
 
+Acked-by: siery <siery@comic.com>
+
 // create the querys
 $post_query = $dbc->query ("SELECT * FROM post");
 $post;
@@ -36,12 +38,13 @@ We are fixing this now. </h3>";
 
 const FOUNDER = "Daniel Sierpiński";
 const FOUNDED = "2018";
-// detete this `if` after new year 2019
 $year = date("Y");
+// detete this `if` after new year 2019
 if ($year == FOUNDED)
-    $ownerSign = FOUNDER . " © " . FOUNDED;
-else
-    $ownerSign = FOUNDER . " © " . FOUNDED . "-" . $year;
+    $ownerSign = FOUNDER . " &copy " . FOUNDED;
+else {
+    $ownerSign = FOUNDER . " &copy " . FOUNDED . "-" . $year;
+}
 
 ?>
 <!DOCTYPE HTML>
@@ -51,9 +54,11 @@ else
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title> Str84word - Algorithms, Programming, C++ </title>
-    <!-- CSS LINKS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/mobile-post.css" />
+    <link rel="stylesheet" href="css/mobile-res.css" />
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     
   </head>
   
@@ -61,17 +66,43 @@ else
     <main>
       <!-- MAIN HEADER -->
       <header class="top-bar">
-	<nav class="main-nav-wrapper">
+	<div class="main-nav-wrapper">
 	  <div class="logo-wrapper">
 	    <div onclick='link("index.php");' class="logo"></div>
 	  </div>
+
+	  <nav class="horizontal-nav-wrapper">
+	    <ul>
+	      <li class="nav-item">Blog</li>
+	      <li class="nav-item">Arts</li>
+	      <li class="nav-item">CV</li>
+	      <li class="nav-item">Contact</li>
+	    </ul>
+	  </nav>
+
+	  <nav class="settings logout">settings</nav>
 	  
 	  <div class="claer"></div>
-	</nav>
+	</div>
       </header>
 
       <div id="articles-feed" class="body-wrapper">
 	<!-- ARTICLE DATA GENERATION -->
+	<?php
+          
+          if ($articles_amount > 0) {
+            for ($i = ($articles_amount - 1); $i >= 0; $i--) {
+              echo "<div class=\"box\">";
+              echo "<header class=\"title\">";
+              echo "<h1>" . addslashes($post_2[$i][0]) . "</h1>";
+              echo "</header>";
+              echo "<article class=\"content\">";
+              echo "<p>" . addslashes($post_2[$i][1]) . "</p>";
+              echo "</article>";
+              echo "</div>";
+            }
+          }
+    ?>
 	
       </div>
 
@@ -85,44 +116,9 @@ else
 
     <!-- JAVASCRIPT -->
     <script type="text/javascript">
+      
       function link(l) {
 	  window.location.replace(l);
-      }
-
-      function generateArticles() {
-	  <?php
-      if ($articles_amount > 0) {
-          echo "let n = $articles_amount;";
-          for ($i = 0; $i < $articles_amount; $i++) {
-              echo "
-              let b$i = document.createElement(\"div\"),
-		      t$i = document.createElement(\"header\"),
-              c$i = document.createElement(\"article\"),
-              h$i = document.createElement(\"h1\");
-            
-              c$i.innerHTML = ( \"" . addslashes($post_2[$i][1]) . "\" );
-              c$i.className = (\"content\");
-      
-              h$i.innerHTML = ( \"" . addslashes($post_2[$i][0]) . "\" );
-              t$i.appendChild(h$i);
-              t$i.className = (\"title\");
-      
-              b$i.appendChild(t$i);
-              b$i.appendChild(c$i);
-              b$i.className = (\"box\");
-      
-              let parent$i = document.getElementById(\"articles-feed\");
-      
-              // append html element
-              parent$i.insertBefore(b$i, parent$i.firstChild);
-      ";
-          }
-      } else {
-	  echo "console.log('no articles to be loadet')";
-      }
-            
-      ?>
-	  
       }
       
       function toggleNavPanel() {
@@ -136,8 +132,6 @@ else
       }
 
     </script>
-
     
   </body>
-
 </html>
