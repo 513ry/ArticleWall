@@ -1,4 +1,4 @@
 # Emacs files
 *.bakcup/
 .projectile
-#*#
+*#
